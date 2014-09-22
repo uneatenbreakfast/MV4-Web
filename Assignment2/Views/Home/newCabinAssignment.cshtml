@@ -1,0 +1,52 @@
+﻿@model Assignment2.Models.Employee
+
+@{
+    ViewBag.Title = "newCabinAssignment";
+}
+
+<h2>newCabinAssignment</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Employee</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.cabinCrewId)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.cabinCrewId)
+            @Html.ValidationMessageFor(model => model.cabinCrewId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.flightId)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.flightId)
+            @Html.ValidationMessageFor(model => model.flightId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.startDate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.startDate)
+            @Html.ValidationMessageFor(model => model.startDate)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
