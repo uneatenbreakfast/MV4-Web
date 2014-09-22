@@ -54,7 +54,7 @@ namespace Assignment2.Controllers
                return View(cabincrew.ToList());
 
             }
-           return View();
+           //return View();
         }
 
         public ActionResult About()
@@ -76,6 +76,27 @@ namespace Assignment2.Controllers
             ViewBag.Message = "Your contact page.x";
 
             Employee e = new Employee();
+            return View(e);
+        }
+
+        [HttpPost]
+        public ActionResult newCabinAssignment(Employee e)
+        {
+            if (ModelState.IsValid) {
+                using (EmployeesContext db = new EmployeesContext()){
+                    db.crew.Add(e);
+
+                    System.Diagnostics.Debug.WriteLine("---------------------------");
+                    System.Diagnostics.Debug.WriteLine(e.cabinCrewId);
+                    System.Diagnostics.Debug.WriteLine(e.flightId);
+                    System.Diagnostics.Debug.WriteLine(e.startDate);
+
+                    db.SaveChanges();
+                }
+                return RedirectToAction("Index");
+            }
+            ViewBag.Message="You got an error.";
+            // only get here if invalid
             return View(e);
         }
     }

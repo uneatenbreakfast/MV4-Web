@@ -42,15 +42,15 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MySql.Data, Version=6.7.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\c280_ass2\c280_ass2\bin\MySql.Data.dll</HintPath>
+      <HintPath>bin\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data.Entity.EF5, Version=6.7.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\c280_ass2\c280_ass2\bin\MySql.Data.Entity.EF5.dll</HintPath>
+      <HintPath>bin\MySql.Data.Entity.EF5.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Web, Version=6.7.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\c280_ass2\c280_ass2\bin\MySql.Web.dll</HintPath>
+      <HintPath>bin\MySql.Web.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
