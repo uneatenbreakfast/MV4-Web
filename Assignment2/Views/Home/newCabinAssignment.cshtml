@@ -19,9 +19,6 @@
         </div>
         <div class="editor-field">
             @Html.DropDownListFor(model => model.cabinCrewId, (SelectList)ViewBag.list)
-            
-
-            @Html.EditorFor(model => model.cabinCrewId)
             @Html.ValidationMessageFor(model => model.cabinCrewId)
         </div>
 
@@ -30,7 +27,8 @@
             <label> Flight: </label>
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.flightId)
+            @Html.DropDownListFor(model => model.flightId, (SelectList)ViewBag.flist)
+            <!-- @Html.EditorFor(model => model.flightId) -->
             @Html.ValidationMessageFor(model => model.flightId)
         </div>
 
@@ -46,6 +44,13 @@
         <p>
             <input type="submit" value="Create" />
         </p>
+
+        
+
+        <p>
+            <h3 class="warningmessage">@ViewBag.Message</h3>
+        </p>
+
     </fieldset>
 }
 

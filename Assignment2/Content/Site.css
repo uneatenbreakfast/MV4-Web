@@ -586,6 +586,20 @@ tr.pager td {
     padding: 0 0.25em 0 0;
 }
 
+select{
+    border: 1px solid #e2e2e2;
+    background: #fff;
+    color: #333;
+
+    margin: 5px 0 6px 0;
+    padding: 5px;
+    width: 312px;
+    height: 32px;
+}
+
+.warningmessage{
+    color:#ff0000;
+}
 
 /********************
 *   Mobile Styles   *

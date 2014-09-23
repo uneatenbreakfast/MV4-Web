@@ -20,6 +20,7 @@ namespace Assignment2.Models
         public DbSet<AircraftType> airType      { get; set; }
         public DbSet<Route> routeDetails        { get; set; }
         public DbSet<Airport> airportDetails    { get; set; }
+        public DbSet<cabinCrew> allcrew         { get; set; }
     }
 
 
@@ -43,6 +44,21 @@ namespace Assignment2.Models
         public string toAirport     { get; set; } 
         public string aircraftModel { get; set; }
         public DateTime startDate   { get; set; }
+    }
+
+    public class flightAssignmentCrewList
+    {
+        public int id { get; set; }
+        public string name { get; set; }
+    }
+
+    public class flightslist
+    {
+        public int id { get; set; }
+        public string flightmes { get; set; }
+        public string day { get; set; }
+        public string fromairport { get; set; }
+ 
     }
 
     [Table("Aircraft")]
@@ -79,6 +95,14 @@ namespace Assignment2.Models
         public string code { get; set; }
     }
 
+    [Table("cabincrew")]
+    public class cabinCrew
+    {
+        [Key]
+        public int person { get; set; }
+        public int forAircraftType { get; set; }
+    }
+
     
     [Table("flight")]
     public class Flight
@@ -109,6 +133,7 @@ namespace Assignment2.Models
         [Key, Column(Order = 1)]
         public int flightId { get; set; }
 
+        
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DateAttributeLow]
@@ -120,10 +145,13 @@ namespace Assignment2.Models
     }
 
     public class DateAttributeLow : RangeAttribute { 
-        public DateAttributeLow() : base(typeof(DateTime),
-            DateTime.Now.ToShortDateString(),
-            DateTime.MaxValue.ToShortDateString()) { 
-            this.ErrorMessage = "Start date cannot be earlier than today"; 
+        public DateAttributeLow() : base(typeof(DateTime), 
+            DateTime.Now.AddYears(-120).ToShortDateString(), 
+            DateTime.MaxValue.ToShortDateString()) 
+        { 
+                    
+            this.ErrorMessage = "Too old!"; 
         } 
     }
+    
 }

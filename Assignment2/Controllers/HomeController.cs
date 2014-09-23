@@ -19,24 +19,6 @@ namespace Assignment2.Controllers
                 ViewBag.Message = String.Format("We have {0} records.", j);
                 var data = db.Employees.ToList();
                 return View(data);
-
-
-                 var results = from r in Ratings
-              join u1 in Users on u1.userid = r.rated
-              join u2 in Users on u2.userid = r.rater
-              join cm in ClassMembers on cm.userid = r.rated
-              join c in Class on cm.teamid = c.teamid
-              join s in Scores on s.ratingsid = r.ratingsid
-              join sbj in Subjects on sbj.subjectid = s.subjectid
-              select new 
-                     {
-                        Date = r.date, 
-                        Rated = u1.username,
-                        Rater = u2.username,
-                        ClassName = c.name,
-                        Ratings = s.ratings,
-                        Subject = sbj.name
-                      };
                 */
 
                 var cabincrew = from e in db.crew 
@@ -116,33 +98,137 @@ namespace Assignment2.Controllers
             return View();
         }
 
-        public ActionResult newCabinAssignment()
+        public ActionResult Delete(int id)
         {
-            ViewBag.Message = "Your contact page.x";
-
             using (EmployeesContext db = new EmployeesContext())
             {
-                var p = db.personDetails.ToList();
-                ViewBag.list = new SelectList(p.ToList(), "id", "name");               
+                Employee e = db.crew.Find(id);
+                if (e == null)
+                {
+                    return HttpNotFound();
+                }
+                // it really should be found, unless // the user edited the URL string 
+                return View(e);
+            }
+            
+        }
+
+
+        public ActionResult newCabinAssignment()
+        {
+            using (EmployeesContext db = new EmployeesContext())
+            {
+                var crew = GetAllCrew();
+                ViewBag.list = new SelectList(crew.ToList(), "id", "name");
+
+                var flightlist = GetAllFlights();
+                ViewBag.flist = new SelectList(flightlist.ToList(), "id", "flightmes");  
             }            
 
-            Employee e = new Employee();
-            return View(e);
+            Employee ex = new Employee();
+            return View(ex);
+        }
+
+        private List<flightAssignmentCrewList> GetAllCrew()
+        {
+            using (EmployeesContext db = new EmployeesContext())
+            {
+                var crew = (from e in db.allcrew
+                            join p in db.personDetails on e.person equals p.id
+                            select new flightAssignmentCrewList
+                            {
+                                id = e.person,
+                                name = p.name
+                            }).Distinct().OrderBy(c => c.name);
+
+                return crew.ToList();
+            }
+        }
+
+        private List<flightslist> GetAllFlights()
+        {
+            using (EmployeesContext db = new EmployeesContext())
+            {
+                var dayIndex = new List<string> { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
+                var flightlist = (from fl in db.flight
+                                  join r in db.routeDetails on fl.route equals r.id
+                                  join a in db.airportDetails on r.fromAirport equals a.id
+                                  join a2 in db.airportDetails on r.toAirport equals a2.id
+                                  select new
+                                  {
+                                      idx = fl.id,
+                                      f = fl.flightDay,
+                                      a1 = a.code,
+                                      a2 = a2.code
+                                  }).AsEnumerable().Select(x => new flightslist()
+                                  {
+                                      id = x.idx,
+                                      day = x.f,
+                                      fromairport = x.a1,
+                                      flightmes = String.Format("{0} | {1} => {2}", x.f, x.a1, x.a2)
+                                  }).OrderBy(c => dayIndex.IndexOf(c.day)).ThenBy(c => c.fromairport);
+
+                return flightlist.ToList();
+            }
         }
 
         [HttpPost]
         public ActionResult newCabinAssignment(Employee e)
         {
-            if (ModelState.IsValid) {
+
+            if (ModelState.IsValid)
+            {
                 using (EmployeesContext db = new EmployeesContext()){
-                    db.crew.Add(e);
-                    db.SaveChanges();
+
+                    var isQualified = (
+                                from cc in db.allcrew
+                                from att in db.flight
+                                where 
+                                cc.person == e.cabinCrewId &&
+                                att.id == e.flightId &&
+                                cc.forAircraftType == att.aircraft
+                                select new {
+                                    cc.person
+                                }).Count();
+
+                    if (isQualified > 0)
+                    {
+                        var isDuplicate = (
+                               from ee in db.crew
+                               where
+                               ee.cabinCrewId == e.cabinCrewId &&
+                               ee.flightId == e.flightId
+                               select new
+                               {
+                                   ee.cabinCrewId
+                               }).Count();
+
+                        if (isDuplicate == 0)
+                        {
+                            db.crew.Add(e);
+                            db.SaveChanges();
+                            return RedirectToAction("Index");
+                        }
+                        else
+                        {
+                            ViewBag.Message = "Crew member already assigned to flight";
+                        } 
+                    }
+                    else
+                    {
+                        ViewBag.Message = "Crew member not qualified for the specified flight";
+                    }   
                 }
-                return RedirectToAction("Index");
-            }
-            ViewBag.Message="You got an error.";
-            // only get here if invalid
-            return View(e);
+            } 
+
+            var crew = GetAllCrew();
+            ViewBag.list = new SelectList(crew.ToList(), "id", "name");
+
+            var flightlist = GetAllFlights();
+            ViewBag.flist = new SelectList(flightlist.ToList(), "id", "flightmes");  
+
+            Employee ex = new Employee();
+            return View(ex); 
         }
     }
 }

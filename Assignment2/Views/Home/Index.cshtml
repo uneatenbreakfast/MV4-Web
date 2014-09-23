@@ -19,7 +19,8 @@
                     grid.Column("fromAirport", "From"),
                     grid.Column("toAirport", "To"),
                     grid.Column("aircraftModel", "Aircraft Model"),
-                    grid.Column("startDate", "Starting Date")
+                    grid.Column("startDate", "Starting Date"),
+                    grid.Column( header: "Delete Record", format: (item) => Html.ActionLink("Delete", "Delete", new {  }) )
                 ) )
                 
             </p>
