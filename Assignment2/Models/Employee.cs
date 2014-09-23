@@ -104,8 +104,9 @@ namespace Assignment2.Models
     {
         private DateTime d;
 
-        [Key]
+        [Key, Column(Order=0)]
         public int cabinCrewId { get; set; }
+        [Key, Column(Order = 1)]
         public int flightId { get; set; }
 
         [DataType(DataType.Date)]

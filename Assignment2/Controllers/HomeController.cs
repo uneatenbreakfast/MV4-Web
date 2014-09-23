@@ -18,9 +18,51 @@ namespace Assignment2.Controllers
                /* int j = db.Employees.Count();
                 ViewBag.Message = String.Format("We have {0} records.", j);
                 var data = db.Employees.ToList();
-                return View(data);*/
+                return View(data);
 
-                var cabincrew = 
+
+                 var results = from r in Ratings
+              join u1 in Users on u1.userid = r.rated
+              join u2 in Users on u2.userid = r.rater
+              join cm in ClassMembers on cm.userid = r.rated
+              join c in Class on cm.teamid = c.teamid
+              join s in Scores on s.ratingsid = r.ratingsid
+              join sbj in Subjects on sbj.subjectid = s.subjectid
+              select new 
+                     {
+                        Date = r.date, 
+                        Rated = u1.username,
+                        Rater = u2.username,
+                        ClassName = c.name,
+                        Ratings = s.ratings,
+                        Subject = sbj.name
+                      };
+                */
+
+                var cabincrew = from e in db.crew 
+                    join p in db.personDetails on e.cabinCrewId equals p.id 
+                    join f in db.flight on e.flightId equals f.id
+                    join a in db.aircraftDetails on f.aircraft equals a.id
+                    join at in db.airType on a.aircraftType equals at.id
+                    join r in db.routeDetails on f.route equals r.id
+                    join ap in db.airportDetails on r.fromAirport equals ap.id
+                    join ap2 in db.airportDetails on r.toAirport equals ap2.id
+                
+                   // orderby e.Surname 
+                    select new crewGrid { 
+                        name = p.name,
+                        flightDay = f.flightDay,
+                        aircraftModel = at.model,
+                        fromAirport = ap.code,
+                        toAirport = ap2.code,
+                        startDate = e.startDate
+
+                    };
+
+
+                  /*
+                 * 
+                 *  var cabincrew = 
                     from e in db.crew 
                     from p in db.personDetails
                     from f in db.flight
@@ -48,10 +90,13 @@ namespace Assignment2.Controllers
                         startDate = e.startDate
 
                     };
+                 * 
+                 * */
 
                cabincrew.ToList();
-
                return View(cabincrew.ToList());
+
+              
 
             }
            //return View();
@@ -75,6 +120,12 @@ namespace Assignment2.Controllers
         {
             ViewBag.Message = "Your contact page.x";
 
+            using (EmployeesContext db = new EmployeesContext())
+            {
+                var p = db.personDetails.ToList();
+                ViewBag.list = new SelectList(p.ToList(), "id", "name");               
+            }            
+
             Employee e = new Employee();
             return View(e);
         }
@@ -85,12 +136,6 @@ namespace Assignment2.Controllers
             if (ModelState.IsValid) {
                 using (EmployeesContext db = new EmployeesContext()){
                     db.crew.Add(e);
-
-                    System.Diagnostics.Debug.WriteLine("---------------------------");
-                    System.Diagnostics.Debug.WriteLine(e.cabinCrewId);
-                    System.Diagnostics.Debug.WriteLine(e.flightId);
-                    System.Diagnostics.Debug.WriteLine(e.startDate);
-
                     db.SaveChanges();
                 }
                 return RedirectToAction("Index");

@@ -4,7 +4,7 @@
     ViewBag.Title = "newCabinAssignment";
 }
 
-<h2>newCabinAssignment</h2>
+<h2>New Staff Assignment</h2>
 
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
@@ -14,15 +14,20 @@
         <legend>Employee</legend>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.cabinCrewId)
+            <!-- @Html.LabelFor(model => model.cabinCrewId) -->
+            <label> Staff Name: </label>
         </div>
         <div class="editor-field">
+            @Html.DropDownListFor(model => model.cabinCrewId, (SelectList)ViewBag.list)
+            
+
             @Html.EditorFor(model => model.cabinCrewId)
             @Html.ValidationMessageFor(model => model.cabinCrewId)
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.flightId)
+            <!-- @Html.LabelFor(model => model.flightId) -->
+            <label> Flight: </label>
         </div>
         <div class="editor-field">
             @Html.EditorFor(model => model.flightId)
@@ -30,7 +35,8 @@
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.startDate)
+            <!-- @Html.LabelFor(model => model.startDate) -->
+            <label> Start Date: </label>
         </div>
         <div class="editor-field">
             @Html.EditorFor(model => model.startDate)
