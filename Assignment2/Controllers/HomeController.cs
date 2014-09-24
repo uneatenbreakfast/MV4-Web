@@ -124,7 +124,7 @@ namespace Assignment2.Controllers
                     //return View(cabincrew.ToList());
 
 
-                    crewGrid c = cabincrew.ToList();
+                    crewGrid c = cabincrew.First();
                 return View(c);
             } 
         }
