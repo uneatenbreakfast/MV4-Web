@@ -153,6 +153,16 @@ namespace Assignment2.Controllers
             return View(ex);
         }
 
+        public ActionResult QualificationCrew()
+        {
+            using (EmployeesContext db = new EmployeesContext())
+            {
+            }
+
+            Employee ex = new Employee();
+            return View(ex);
+        }
+
         private List<flightAssignmentCrewList> GetAllCrew()
         {
             using (EmployeesContext db = new EmployeesContext())

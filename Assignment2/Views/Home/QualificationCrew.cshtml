@@ -1,8 +1,15 @@
-﻿@model IEnumerable<Assignment2.Models.crewGrid>
+﻿@model IEnumerable<Assignment2.Models.qualifyGrid>
 @{
     WebGrid grid = new WebGrid(Model);
-    ViewBag.Title = "";
+    ViewBag.Title = "Home Page";
 }
+
+@{
+    ViewBag.Title = "QualificationCrew";
+}
+
+<h2>QualificationCrew</h2>
+
 @section featured {
     <section class="featured">
         <div class="content-wrapper">
@@ -10,6 +17,7 @@
                 <h1>@ViewBag.Title.</h1>
                 <h2>@ViewBag.Message</h2>
             </hgroup>
+
             <p>
 
                 <h2>People</h2> 
@@ -27,15 +35,11 @@
         </div>
     </section>
 }
-<h3>More Features</h3>
-<ol class="round">
-    <li class="one">
-        <h5>@Html.ActionLink("New Staff Assignment", "newCabinAssignment")</h5>
-        @Html.ActionLink("Assign a staff member to a new flight", "newCabinAssignment")
-    </li>
 
-    <li class="two">
-        <h5>@Html.ActionLink("Personnel Qualifications", "QualificationCrew")</h5>
-        @Html.ActionLink("View Personnel Qualifications", "QualificationCrew")
-    </li>
-</ol>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

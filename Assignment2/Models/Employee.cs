@@ -51,6 +51,12 @@ namespace Assignment2.Models
         public int flightId         { get; set; }
     }
 
+    public class qualifyGrid
+    {
+        public string name { get; set; }
+        public string aircrafts { get; set; }
+    }
+
     public class flightAssignmentCrewList
     {
         public int id { get; set; }
