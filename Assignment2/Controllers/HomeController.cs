@@ -9,83 +9,67 @@ namespace Assignment2.Controllers
 {
     public class HomeController : Controller
     {
-
-        private IQueryable<crewGrid> dbCrewGrid;
+        
         public ActionResult Index()
         {
             ViewBag.Message = "M";
 
+           using (EmployeesContext db = new EmployeesContext())
+            {
+                var cabincrew = from e in db.crew
+                                join p in db.personDetails on e.cabinCrewId equals p.id
+                                join f in db.flight on e.flightId equals f.id
+                                join a in db.aircraftDetails on f.aircraft equals a.id
+                                join at in db.airType on a.aircraftType equals at.id
+                                join r in db.routeDetails on f.route equals r.id
+                                join ap in db.airportDetails on r.fromAirport equals ap.id
+                                join ap2 in db.airportDetails on r.toAirport equals ap2.id
+                                select new crewGrid
+                                {
+                                    name = p.name,
+                                    flightDay = f.flightDay,
+                                    aircraftModel = at.model,
+                                    fromAirport = ap.code,
+                                    toAirport = ap2.code,
+                                    startDate = e.startDate,
+                                    crewId = e.cabinCrewId,
+                                    flightId = f.id
+                                };
+                return View(cabincrew.ToList());
+            }  
+            
+        }
+
+
+
+        private IQueryable<crewGrid> getStaffFlights()
+        {
+
             using (EmployeesContext db = new EmployeesContext())
             {
-               /* int j = db.Employees.Count();
-                ViewBag.Message = String.Format("We have {0} records.", j);
-                var data = db.Employees.ToList();
-                return View(data);
-                */
-
-                var cabincrew = from e in db.crew 
-                    join p in db.personDetails on e.cabinCrewId equals p.id 
-                    join f in db.flight on e.flightId equals f.id
-                    join a in db.aircraftDetails on f.aircraft equals a.id
-                    join at in db.airType on a.aircraftType equals at.id
-                    join r in db.routeDetails on f.route equals r.id
-                    join ap in db.airportDetails on r.fromAirport equals ap.id
-                    join ap2 in db.airportDetails on r.toAirport equals ap2.id
-                
-                   // orderby e.Surname 
-                    select new crewGrid { 
-                        name = p.name,
-                        flightDay = f.flightDay,
-                        aircraftModel = at.model,
-                        fromAirport = ap.code,
-                        toAirport = ap2.code,
-                        startDate = e.startDate,
-                        crewId = e.cabinCrewId,
-                        flightId = f.id
-                    };
-
-                  /*
-                 * 
-                 *  var cabincrew = 
-                    from e in db.crew 
-                    from p in db.personDetails
-                    from f in db.flight
-                    from a in db.aircraftDetails
-                    from at in db.airType
-                    from r in db.routeDetails
-                    from ap in db.airportDetails
-                    from ap2 in db.airportDetails
-                    where 
-                    e.cabinCrewId == p.id &&
-                    f.id == e.flightId &&
-                    f.aircraft == a.id &&
-                    a.aircraftType == at.id &&
-                    f.route == r.id &&
-                    r.fromAirport == ap.id &&
-                    r.toAirport == ap2.id
-                    
-                   // orderby e.Surname 
-                    select new crewGrid { 
-                        name = p.name,
-                        flightDay = f.flightDay,
-                        aircraftModel = at.model,
-                        fromAirport = ap.code,
-                        toAirport = ap2.code,
-                        startDate = e.startDate
-
-                    };
-                 * 
-                 * */
-
-               // dbCrewGrid = cabincrew;
-
-              // cabincrew.ToList();
-               return View(cabincrew.ToList());
-
-              
-
+                var cabincrew = from e in db.crew
+                                join p in db.personDetails on e.cabinCrewId equals p.id
+                                join f in db.flight on e.flightId equals f.id
+                                join a in db.aircraftDetails on f.aircraft equals a.id
+                                join at in db.airType on a.aircraftType equals at.id
+                                join r in db.routeDetails on f.route equals r.id
+                                join ap in db.airportDetails on r.fromAirport equals ap.id
+                                join ap2 in db.airportDetails on r.toAirport equals ap2.id
+                                select new crewGrid
+                                {
+                                    name = p.name,
+                                    flightDay = f.flightDay,
+                                    aircraftModel = at.model,
+                                    fromAirport = ap.code,
+                                    toAirport = ap2.code,
+                                    startDate = e.startDate,
+                                    crewId = e.cabinCrewId,
+                                    flightId = f.id
+                                };
+                //return View(cabincrew.ToList());
+                return cabincrew;
             }
-           //return View();
+            
         }
 
         public ActionResult About()
@@ -114,12 +98,36 @@ namespace Assignment2.Controllers
                     return HttpNotFound(); // it really should be found, unless
                 // the user edited the URL string
 
-               // crewGrid c = db.cgrid.Find(cId, fId);
-               // return View(c);
+
+
+
+              
+                    var cabincrew = from ex in db.crew
+                                    join p in db.personDetails on cId equals p.id
+                                    join f in db.flight on fId equals f.id
+                                    join a in db.aircraftDetails on f.aircraft equals a.id
+                                    join at in db.airType on a.aircraftType equals at.id
+                                    join r in db.routeDetails on f.route equals r.id
+                                    join ap in db.airportDetails on r.fromAirport equals ap.id
+                                    join ap2 in db.airportDetails on r.toAirport equals ap2.id
+                                    select new crewGrid
+                                    {
+                                        name = p.name,
+                                        flightDay = f.flightDay,
+                                        aircraftModel = at.model,
+                                        fromAirport = ap.code,
+                                        toAirport = ap2.code,
+                                        startDate = e.startDate,
+                                        crewId = e.cabinCrewId,
+                                        flightId = f.id
+                                    };
+                    //return View(cabincrew.ToList());
+
+
+                    crewGrid c = cabincrew.ToList();
+                return View(c);
             } 
         }
-
-
 
         [HttpPost]
         public void DeleteCrewFlightx(crewGrid e)
