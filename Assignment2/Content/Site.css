@@ -24,7 +24,7 @@ a {
 
     a:link, a:visited,
     a:active, a:hover {
-        color: #9E9E9E;
+        color: #7e7e7e ;
     }
 
     a:hover {
@@ -99,7 +99,7 @@ h5, h6 {
 }
 
 #body {
-    //background-color: #efeeef;
+    background-color: #FFD0D0;
     clear: both;
     padding-bottom: 35px;
 }
@@ -200,7 +200,7 @@ ul#menu {
         }
 
         ul#menu li a:hover {
-            color: #333;
+            color: #fff;
             text-decoration: none;
         }
 

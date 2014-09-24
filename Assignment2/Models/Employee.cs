@@ -160,11 +160,11 @@ namespace Assignment2.Models
 
     public class DateAttributeLow : RangeAttribute { 
         public DateAttributeLow() : base(typeof(DateTime), 
-            DateTime.Now.AddYears(-120).ToShortDateString(), 
+            DateTime.Now.AddYears(0).ToShortDateString(), 
             DateTime.MaxValue.ToShortDateString()) 
         { 
                     
-            this.ErrorMessage = "Too old!"; 
+            this.ErrorMessage = "Start date cannot be earlier than today"; 
         } 
     }
     
