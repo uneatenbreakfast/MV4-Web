@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Assignment2.Models;
+using System.Data;
 
 namespace Assignment2.Controllers
 {
@@ -98,10 +99,6 @@ namespace Assignment2.Controllers
                     return HttpNotFound(); // it really should be found, unless
                 // the user edited the URL string
 
-
-
-
-              
                     var cabincrew = from ex in db.crew
                                     join p in db.personDetails on cId equals p.id
                                     join f in db.flight on fId equals f.id
@@ -121,33 +118,23 @@ namespace Assignment2.Controllers
                                         crewId = e.cabinCrewId,
                                         flightId = f.id
                                     };
-                    //return View(cabincrew.ToList());
-
 
                     crewGrid c = cabincrew.First();
-                return View(c);
+                    return View(c);
             } 
         }
 
         [HttpPost]
-        public void DeleteCrewFlightx(crewGrid e)
+        public ActionResult DeleteCrewFlight(int cId, int fId, int? jj)
         {
-            //System.Diagnostics.Debug.WriteLine("____________------------------------- " + cId);
-            /*
-            return RedirectToAction("Index");
-
-
             using (EmployeesContext db = new EmployeesContext())
             {
-                Employee e = db.crew.Find(cId);
-                if (e == null)
-                {
-                    return HttpNotFound();
-                }
-                // it really should be found, unless // the user edited the URL string 
-                return View(e);
-            }*/
-            
+                Employee ex = db.crew.Find(cId, fId);
+                db.Entry(ex).State = EntityState.Deleted; 
+                db.SaveChanges();
+
+                return RedirectToAction("Index");
+            }            
         }
 
 
