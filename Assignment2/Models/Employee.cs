@@ -44,6 +44,9 @@ namespace Assignment2.Models
         public string fromAirport   { get; set; } 
         public string toAirport     { get; set; } 
         public string aircraftModel { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime startDate   { get; set; }
         [Key, Column(Order=0)]
         public int crewId           { get; set; }

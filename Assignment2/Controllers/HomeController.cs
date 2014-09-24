@@ -75,14 +75,14 @@ namespace Assignment2.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your app description page.";
+            ViewBag.Message = "All about this assignment";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Get in touch";
 
             return View();
         }
@@ -154,23 +154,37 @@ namespace Assignment2.Controllers
         {
             using (EmployeesContext db = new EmployeesContext())
             {
+                
+
                 var cq = (from c in db.allcrew
                           join p in db.personDetails on c.person equals p.id
                           join a in db.airType on c.forAircraftType equals a.id
-                          group c by c.person into tt
-                          select new qualifyGrid
+                          select new
                           {
-                              name = tt.Key
+                              name = p.name,
                               aircrafts = a.model
-                          }).AsEnumerable().Select(x => new qualifyGrid()
-                          {
-                              name = x.name,
-                              aircrafts = x.aircrafts.ToString()
-                          });
+                          }).ToList().GroupBy(user => user.name);
 
+                List<qualifyGrid> allData = new List<qualifyGrid>();
+                foreach (var group in cq)
+                {
+                    string jData = "";
+                    foreach (var entry in group)
+                    {
+                        jData += entry.aircrafts + " , ";
+                    }
 
+                    jData = jData.Substring(0,jData.Length -3);
 
-                return View(cq.ToList());
+                    qualifyGrid q = new qualifyGrid{
+                        name = group.Key,
+                        aircrafts = jData
+                    };
+                    allData.Add(q);                    
+                }
+                
+
+                return View(allData.OrderBy(x => x.name).ToList());
             }
         }
 

@@ -1,13 +1,13 @@
 ﻿html {
-    background-color: #e2e2e2;
+    background-color: #000000;
     margin: 0;
     padding: 0;
 }
 
 body {
-    background-color: #fff;
-    border-top: solid 10px #000;
-    color: #333;
+    background-color: #1B1B1B;
+    border-top: solid 5px #FF3636;
+    color: #A8A8A8;
     font-size: .85em;
     font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
     margin: 0;
@@ -24,7 +24,7 @@ a {
 
     a:link, a:visited,
     a:active, a:hover {
-        color: #333;
+        color: #9E9E9E;
     }
 
     a:hover {
@@ -60,7 +60,7 @@ mark {
 
 h1, h2, h3,
 h4, h5, h6 {
-    color: #000;
+    //color: #000;
     margin-bottom: 0;
     padding-bottom: 0;
 }
@@ -99,19 +99,19 @@ h5, h6 {
 }
 
 #body {
-    background-color: #efeeef;
+    //background-color: #efeeef;
     clear: both;
     padding-bottom: 35px;
 }
 
     .main-content {
-        background: url("../Images/accent.png") no-repeat;
+       // background: url("../Images/accent.png") no-repeat;
         padding-left: 10px;
         padding-top: 30px;
     }
 
     .featured + .main-content {
-        background: url("../Images/heroAccent.png") no-repeat;
+        //background: url("../Images/heroAccent.png") no-repeat;
     }
 
 header .content-wrapper {
@@ -120,7 +120,7 @@ header .content-wrapper {
 
 footer {
     clear: both;
-    background-color: #e2e2e2;
+    background-color: #000000;
     font-size: .8em;
     height: 100px;
 }
@@ -209,16 +209,14 @@ ul#menu {
 ----------------------------------------------------------*/
 /* featured */
 .featured {
-    background-color: #fff;
+    //background-color: #fff;
 }
 
     .featured .content-wrapper {
-        background-color: #7ac0da;
-        background-image: -ms-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
-        background-image: -o-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
-        background-image: -webkit-gradient(linear, left top, right top, color-stop(0, #7ac0da), color-stop(1, #a4d4e6));
-        background-image: -webkit-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
-        background-image: linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
+
+        background-color: #FFBBBB;
+
+        
         color: #3e5667;
         padding: 20px 40px 30px 40px;
     }
@@ -538,7 +536,8 @@ th {
     font-size: 1.2em;
     text-align: left;
     border: none 0px;
-    padding-left: 0;
+    padding-right: 2em;
+    color: #333;
 }
 
     th a {
@@ -548,7 +547,7 @@ th {
 
     th a:link, th a:visited, th a:active, th a:hover {
         color: #333;
-        font-weight: 600;
+        font-weight: bold;
         text-decoration: none;
         padding: 0;
     }
@@ -767,4 +766,8 @@ select{
         footer p {
             margin: 0;
         }
+}
+
+.oddrow{
+    background-color:#fcdada;
 }

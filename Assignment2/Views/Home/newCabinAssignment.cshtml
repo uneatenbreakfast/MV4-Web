@@ -1,59 +1,68 @@
 ﻿@model Assignment2.Models.Employee
 
 @{
-    ViewBag.Title = "newCabinAssignment";
+    ViewBag.Title = "New Staff Assignment";
 }
 
-<h2>New Staff Assignment</h2>
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
 
-@using (Html.BeginForm()) {
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
+            <h2>@ViewBag.Title</h2>
 
-    <fieldset>
-        <legend>Employee</legend>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
 
-        <div class="editor-label">
-            <!-- @Html.LabelFor(model => model.cabinCrewId) -->
-            <label> Staff Name: </label>
-        </div>
-        <div class="editor-field">
-            @Html.DropDownListFor(model => model.cabinCrewId, (SelectList)ViewBag.list)
-            @Html.ValidationMessageFor(model => model.cabinCrewId)
-        </div>
+                <fieldset>
+                    <legend>Employee</legend>
 
-        <div class="editor-label">
-            <!-- @Html.LabelFor(model => model.flightId) -->
-            <label> Flight: </label>
-        </div>
-        <div class="editor-field">
-            @Html.DropDownListFor(model => model.flightId, (SelectList)ViewBag.flist)
-            <!-- @Html.EditorFor(model => model.flightId) -->
-            @Html.ValidationMessageFor(model => model.flightId)
-        </div>
+                    <div class="editor-label">
+                        <!-- @Html.LabelFor(model => model.cabinCrewId) -->
+                        <label> Staff Name: </label>
+                    </div>
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.cabinCrewId, (SelectList)ViewBag.list)
+                        @Html.ValidationMessageFor(model => model.cabinCrewId)
+                    </div>
 
-        <div class="editor-label">
-            <!-- @Html.LabelFor(model => model.startDate) -->
-            <label> Start Date: </label>
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.startDate)
-            @Html.ValidationMessageFor(model => model.startDate)
-        </div>
+                    <div class="editor-label">
+                        <!-- @Html.LabelFor(model => model.flightId) -->
+                        <label> Flight: </label>
+                    </div>
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.flightId, (SelectList)ViewBag.flist)
+                        <!-- @Html.EditorFor(model => model.flightId) -->
+                        @Html.ValidationMessageFor(model => model.flightId)
+                    </div>
 
-        <p>
-            <input type="submit" value="Create" />
-        </p>
+                    <div class="editor-label">
+                        <!-- @Html.LabelFor(model => model.startDate) -->
+                        <label> Start Date: </label>
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.startDate)
+                        @Html.ValidationMessageFor(model => model.startDate)
+                    </div>
 
-        
+                    <p>
+                        <input type="submit" value="Create" />
+                    </p>
 
-        <p>
-            <h3 class="warningmessage">@ViewBag.Message</h3>
-        </p>
 
-    </fieldset>
-}
 
+                    <p>
+                        <h3 class="warningmessage">@ViewBag.Message</h3>
+                    </p>
+
+
+                </fieldset>
+            }
+
+          </div></section>
+    }
+    
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>

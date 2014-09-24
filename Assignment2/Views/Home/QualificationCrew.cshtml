@@ -1,26 +1,20 @@
 ﻿@model IEnumerable<Assignment2.Models.qualifyGrid>
 @{
-    WebGrid grid = new WebGrid(Model);
-    ViewBag.Title = "Home Page";
+    WebGrid grid = new WebGrid(Model, rowsPerPage: 20);
 }
 
 @{
-    ViewBag.Title = "QualificationCrew";
+    ViewBag.Title = "Staff Qualifications";
 }
-
-<h2>QualificationCrew</h2>
 
 @section featured {
     <section class="featured">
         <div class="content-wrapper">
             <hgroup class="title">
-                <h1>@ViewBag.Title.</h1>
-                <h2>@ViewBag.Message</h2>
+                <h1>@ViewBag.Title</h1>
             </hgroup>
 
             <p>
-
-                <h2>People</h2> 
                 @grid.GetHtml(columns: grid.Columns(
                     grid.Column("name", "Crew Name"),
                     grid.Column("aircrafts", "Aircraft Model")
