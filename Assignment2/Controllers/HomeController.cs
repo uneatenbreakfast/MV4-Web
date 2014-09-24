@@ -156,16 +156,22 @@ namespace Assignment2.Controllers
             {
                 var cq = (from c in db.allcrew
                           join p in db.personDetails on c.person equals p.id
-                          join a in db.aircraftDetails on c.forAircraftType equals a.id
+                          join a in db.airType on c.forAircraftType equals a.id
+                          group c by c.person into tt
                           select new qualifyGrid
                           {
-                              name = p.name,
-                              aircrafts = a.aircraftType
+                              name = tt.Key
+                              aircrafts = a.model
+                          }).AsEnumerable().Select(x => new qualifyGrid()
+                          {
+                              name = x.name,
+                              aircrafts = x.aircrafts.ToString()
                           });
-            }
 
-            Employee ex = new Employee();
-            return View(ex);
+
+
+                return View(cq.ToList());
+            }
         }
 
         private List<flightAssignmentCrewList> GetAllCrew()
