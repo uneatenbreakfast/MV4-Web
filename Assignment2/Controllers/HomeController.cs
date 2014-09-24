@@ -87,9 +87,6 @@ namespace Assignment2.Controllers
             return View();
         }
 
-
-
-
         public ActionResult DeleteCrewFlight(int cId, int fId)
         {
             using (EmployeesContext db = new EmployeesContext())
@@ -157,6 +154,14 @@ namespace Assignment2.Controllers
         {
             using (EmployeesContext db = new EmployeesContext())
             {
+                var cq = (from c in db.allcrew
+                          join p in db.personDetails on c.person equals p.id
+                          join a in db.aircraftDetails on c.forAircraftType equals a.id
+                          select new qualifyGrid
+                          {
+                              name = p.name,
+                              aircrafts = a.aircraftType
+                          });
             }
 
             Employee ex = new Employee();
