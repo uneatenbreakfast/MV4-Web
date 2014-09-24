@@ -21,6 +21,8 @@ namespace Assignment2.Models
         public DbSet<Route> routeDetails        { get; set; }
         public DbSet<Airport> airportDetails    { get; set; }
         public DbSet<cabinCrew> allcrew         { get; set; }
+
+        //public DbSet<crewGrid> cgrid { get; set; }
     }
 
 
@@ -36,7 +38,6 @@ namespace Assignment2.Models
      * 
      * */
 
-
     public class crewGrid { 
         public string name          { get; set; } 
         public string flightDay     { get; set; } 
@@ -44,6 +45,10 @@ namespace Assignment2.Models
         public string toAirport     { get; set; } 
         public string aircraftModel { get; set; }
         public DateTime startDate   { get; set; }
+        [Key, Column(Order=0)]
+        public int crewId           { get; set; }
+        [Key, Column(Order = 1)]
+        public int flightId         { get; set; }
     }
 
     public class flightAssignmentCrewList

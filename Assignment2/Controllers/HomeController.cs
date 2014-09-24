@@ -9,6 +9,8 @@ namespace Assignment2.Controllers
 {
     public class HomeController : Controller
     {
+
+        private IQueryable<crewGrid> dbCrewGrid;
         public ActionResult Index()
         {
             ViewBag.Message = "M";
@@ -37,10 +39,10 @@ namespace Assignment2.Controllers
                         aircraftModel = at.model,
                         fromAirport = ap.code,
                         toAirport = ap2.code,
-                        startDate = e.startDate
-
+                        startDate = e.startDate,
+                        crewId = e.cabinCrewId,
+                        flightId = f.id
                     };
-
 
                   /*
                  * 
@@ -75,7 +77,9 @@ namespace Assignment2.Controllers
                  * 
                  * */
 
-               cabincrew.ToList();
+               // dbCrewGrid = cabincrew;
+
+              // cabincrew.ToList();
                return View(cabincrew.ToList());
 
               
@@ -98,18 +102,43 @@ namespace Assignment2.Controllers
             return View();
         }
 
-        public ActionResult Delete(int id)
+
+
+
+        public ActionResult DeleteCrewFlight(int cId, int fId)
         {
             using (EmployeesContext db = new EmployeesContext())
             {
-                Employee e = db.crew.Find(id);
+                Employee e = db.crew.Find(cId, fId);
+                if (e == null)
+                    return HttpNotFound(); // it really should be found, unless
+                // the user edited the URL string
+
+               // crewGrid c = db.cgrid.Find(cId, fId);
+               // return View(c);
+            } 
+        }
+
+
+
+        [HttpPost]
+        public void DeleteCrewFlightx(crewGrid e)
+        {
+            //System.Diagnostics.Debug.WriteLine("____________------------------------- " + cId);
+            /*
+            return RedirectToAction("Index");
+
+
+            using (EmployeesContext db = new EmployeesContext())
+            {
+                Employee e = db.crew.Find(cId);
                 if (e == null)
                 {
                     return HttpNotFound();
                 }
                 // it really should be found, unless // the user edited the URL string 
                 return View(e);
-            }
+            }*/
             
         }
 
